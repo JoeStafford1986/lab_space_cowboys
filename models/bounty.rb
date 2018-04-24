@@ -2,7 +2,7 @@ require('pg')
 
 class Bounty
 
-attr_accessor :name, :bounty_value, :last_known_location, :favourite_weapon
+  attr_accessor :name, :bounty_value, :last_known_location, :favourite_weapon
 
   def initialize(options)
     @id = options["id"].to_i if options["id"]
@@ -12,7 +12,7 @@ attr_accessor :name, :bounty_value, :last_known_location, :favourite_weapon
     @favourite_weapon = options["favourite_weapon"]
   end
 
-#instance variable methods
+  #instance methods
 
   def save()
     db = PG.connect({
@@ -44,6 +44,4 @@ attr_accessor :name, :bounty_value, :last_known_location, :favourite_weapon
     db.close()
   end
 
-
-  ###
 end
