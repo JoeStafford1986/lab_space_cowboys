@@ -44,4 +44,44 @@ class Bounty
     db.close()
   end
 
+  def update()
+    db = PG.connect({
+      dbname: "bounty_tracking",
+      host: "localhost"
+      })
+    sql = "UPDATE bounties
+    SET (name, bounty_value, last_known_location, favourite_weapon) = ($1, $2, $3, $4)
+    WHERE id = $5"
+    values = [@name, @bounty_value, @last_known_location, @favourite_weapon, @id]
+    db.prepare("update", sql)
+    db.exec_prepared("update", values)
+    db.close()
+  end
+
+  #Class methods
+
+  def Bounty.all()
+    db = PG.connect({
+      dbname: "bounty_tracking",
+      host: "localhost"
+      })
+    sql = "SELECT * FROM bounties"
+    db.prepare("all", sql)
+    bounty_hashes = db.exec_prepared("all")
+    db.close()
+    bounties = bounty_hashes.map { |bounty_hash| Bounty.new(bounty_hash) }
+    return bounties
+  end
+
+  def Bounty.delete_all()
+  db = PG.connect({
+    dbname: "bounty_tracking",
+    host: "localhost"
+    })
+  sql = "DELETE FROM bounties"
+  db.prepare("delete_all", sql)
+  db.exec_prepared("delete_all")
+  db.close()
+end
+
 end

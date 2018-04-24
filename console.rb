@@ -17,5 +17,7 @@ bounty2 = Bounty.new ({
 })
 bounty2.save()
 
+Bounty.all()
+
 binding.pry
 nil
